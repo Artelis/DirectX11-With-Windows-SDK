@@ -2,7 +2,6 @@
 #include "d3dUtil.h"
 #include "DXTrace.h"
 using namespace DirectX;
-using namespace std::experimental;
 
 const D3D11_INPUT_ELEMENT_DESC GameApp::VertexPosColor::inputLayout[2] = {
 	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -121,7 +120,7 @@ bool GameApp::InitResource()
 	// ******************
 	// 索引数组
 	//
-	WORD indices[] = {
+	DWORD indices[] = {
 		// 正面
 		0, 1, 2,
 		2, 3, 0,
@@ -152,7 +151,7 @@ bool GameApp::InitResource()
 	InitData.pSysMem = indices;
 	HR(m_pd3dDevice->CreateBuffer(&ibd, &InitData, m_pIndexBuffer.GetAddressOf()));
 	// 输入装配阶段的索引缓冲区设置
-	m_pd3dImmediateContext->IASetIndexBuffer(m_pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
+	m_pd3dImmediateContext->IASetIndexBuffer(m_pIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 
 
 	// ******************

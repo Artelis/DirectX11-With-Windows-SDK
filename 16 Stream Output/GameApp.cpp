@@ -2,7 +2,6 @@
 #include "d3dUtil.h"
 #include "DXTrace.h"
 using namespace DirectX;
-using namespace std::experimental;
 
 GameApp::GameApp(HINSTANCE hInstance)
 	: D3DApp(hInstance),
@@ -105,7 +104,7 @@ void GameApp::UpdateScene(float dt)
 	// ******************
 	// 切换分形
 	//
-	if (m_KeyboardTracker.IsKeyPressed(Keyboard::Q))
+	if (m_KeyboardTracker.IsKeyPressed(Keyboard::Q) && m_ShowMode != Mode::SplitedTriangle)
 	{
 		m_ShowMode = Mode::SplitedTriangle;
 		ResetSplitedTriangle();
@@ -115,7 +114,7 @@ void GameApp::UpdateScene(float dt)
 		stride = sizeof(VertexPosColor);
 		m_pd3dImmediateContext->IASetVertexBuffers(0, 1, m_pVertexBuffers[0].GetAddressOf(), &stride, &offset);
 	}
-	else if (m_KeyboardTracker.IsKeyPressed(Keyboard::W))
+	else if (m_KeyboardTracker.IsKeyPressed(Keyboard::W) && m_ShowMode != Mode::SplitedSnow)
 	{
 		m_ShowMode = Mode::SplitedSnow;
 		ResetSplitedSnow();
@@ -125,7 +124,7 @@ void GameApp::UpdateScene(float dt)
 		stride = sizeof(VertexPosColor);
 		m_pd3dImmediateContext->IASetVertexBuffers(0, 1, m_pVertexBuffers[0].GetAddressOf(), &stride, &offset);
 	}
-	else if (m_KeyboardTracker.IsKeyPressed(Keyboard::E))
+	else if (m_KeyboardTracker.IsKeyPressed(Keyboard::E) && m_ShowMode != Mode::SplitedSphere)
 	{
 		m_ShowMode = Mode::SplitedSphere;
 		ResetSplitedSphere();
@@ -413,7 +412,7 @@ void GameApp::ResetSplitedSnow()
 	//
 
 	// 设置三角形顶点
-	float sqrt3 = sqrt(3.0f);
+	float sqrt3 = sqrtf(3.0f);
 	VertexPosColor vertices[] =
 	{
 		{ XMFLOAT3(-3.0f / 4, -sqrt3 / 4, 0.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f) },

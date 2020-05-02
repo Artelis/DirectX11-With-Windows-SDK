@@ -2,7 +2,6 @@
 #include "d3dUtil.h"
 #include "DXTrace.h"
 using namespace DirectX;
-using namespace std::experimental;
 
 GameApp::GameApp(HINSTANCE hInstance)
 	: D3DApp(hInstance),
@@ -98,7 +97,8 @@ void GameApp::OnResize()
 		m_Minimap.SetMesh(m_pd3dDevice.Get(), Geometry::Create2DShow(1.0f - 100.0f / m_ClientWidth * 2,  -1.0f + 100.0f / m_ClientHeight * 2,
 			100.0f / m_ClientWidth * 2, 100.0f / m_ClientHeight * 2));
 		// 屏幕淡入淡出纹理大小重设
-		m_pScreenFadeRender = std::make_unique<TextureRender>(m_pd3dDevice.Get(), m_ClientWidth, m_ClientHeight, false);
+		m_pScreenFadeRender = std::make_unique<TextureRender>();
+		HR(m_pScreenFadeRender->InitResource(m_pd3dDevice.Get(), m_ClientWidth, m_ClientHeight, false));
 	}
 }
 
@@ -189,13 +189,13 @@ void GameApp::DrawScene()
 	//
 
 	// 预先清空后备缓冲区
-	m_pd3dImmediateContext->ClearRenderTargetView(m_pRenderTargetView.Get(), reinterpret_cast<const float*>(&Colors::Black));
+	m_pd3dImmediateContext->ClearRenderTargetView(m_pRenderTargetView.Get(), Colors::Black);
 	m_pd3dImmediateContext->ClearDepthStencilView(m_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	if (m_FadeUsed)
 	{
 		// 开始淡入/淡出
-		m_pScreenFadeRender->Begin(m_pd3dImmediateContext.Get());
+		m_pScreenFadeRender->Begin(m_pd3dImmediateContext.Get(), Colors::Black);
 	}
 
 
@@ -211,7 +211,7 @@ void GameApp::DrawScene()
 	m_MinimapEffect.Apply(m_pd3dImmediateContext.Get());
 	// 最后绘制小地图
 	m_pd3dImmediateContext->IASetVertexBuffers(0, 1, m_Minimap.modelParts[0].vertexBuffer.GetAddressOf(), strides, offsets);
-	m_pd3dImmediateContext->IASetIndexBuffer(m_Minimap.modelParts[0].indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
+	m_pd3dImmediateContext->IASetIndexBuffer(m_Minimap.modelParts[0].indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	m_pd3dImmediateContext->DrawIndexed(6, 0, 0);
 
 	if (m_FadeUsed)
@@ -227,7 +227,7 @@ void GameApp::DrawScene()
 		m_ScreenFadeEffect.Apply(m_pd3dImmediateContext.Get());
 		// 将保存的纹理输出到屏幕
 		m_pd3dImmediateContext->IASetVertexBuffers(0, 1, m_FullScreenShow.modelParts[0].vertexBuffer.GetAddressOf(), strides, offsets);
-		m_pd3dImmediateContext->IASetIndexBuffer(m_FullScreenShow.modelParts[0].indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
+		m_pd3dImmediateContext->IASetIndexBuffer(m_FullScreenShow.modelParts[0].indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 		m_pd3dImmediateContext->DrawIndexed(6, 0, 0);
 		// 务必解除绑定在着色器上的资源，因为下一帧开始它会作为渲染目标
 		m_ScreenFadeEffect.SetTexture(nullptr);
@@ -276,8 +276,10 @@ bool GameApp::InitResource()
 	// ******************
 	// 初始化用于Render-To-Texture的对象
 	//
-	m_pMinimapRender = std::make_unique<TextureRender>(m_pd3dDevice.Get(), 400, 400, true);
-	m_pScreenFadeRender = std::make_unique<TextureRender>(m_pd3dDevice.Get(), m_ClientWidth, m_ClientHeight, false);
+	m_pMinimapRender = std::make_unique<TextureRender>();
+	HR(m_pMinimapRender->InitResource(m_pd3dDevice.Get(), 400, 400, true));
+	m_pScreenFadeRender = std::make_unique<TextureRender>();
+	HR(m_pScreenFadeRender->InitResource(m_pd3dDevice.Get(), m_ClientWidth, m_ClientHeight, false));
 
 	// ******************
 	// 初始化游戏对象
@@ -360,7 +362,7 @@ bool GameApp::InitResource()
 	m_BasicEffect.SetProjMatrix(XMMatrixOrthographicLH(190.0f, 190.0f, 1.0f, 20.0f));	// 使用正交投影矩阵(中心在摄像机位置)
 	// 关闭雾效
 	m_BasicEffect.SetFogState(false);
-	m_pMinimapRender->Begin(m_pd3dImmediateContext.Get());
+	m_pMinimapRender->Begin(m_pd3dImmediateContext.Get(), Colors::Black);
 	DrawScene(true);
 	m_pMinimapRender->End(m_pd3dImmediateContext.Get());
 

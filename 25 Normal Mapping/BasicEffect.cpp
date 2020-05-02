@@ -4,7 +4,6 @@
 #include "DXTrace.h"
 #include "Vertex.h"
 using namespace DirectX;
-using namespace std::experimental;
 
 
 //
@@ -269,8 +268,7 @@ void BasicEffect::SetRenderDefault(ID3D11DeviceContext * deviceContext, RenderTy
 	deviceContext->GSSetShader(nullptr, nullptr, 0);
 	deviceContext->RSSetState(nullptr);
 	
-	// 注意这里变为各向异性过滤器
-	deviceContext->PSSetSamplers(0, 1, RenderStates::SSAnistropicWrap.GetAddressOf());
+	deviceContext->PSSetSamplers(0, 1, RenderStates::SSLinearWrap.GetAddressOf());
 	deviceContext->OMSetDepthStencilState(nullptr, 0);
 	deviceContext->OMSetBlendState(nullptr, nullptr, 0xFFFFFFFF);
 }
@@ -295,7 +293,7 @@ void BasicEffect::SetRenderWithNormalMap(ID3D11DeviceContext * deviceContext, Re
 	deviceContext->GSSetShader(nullptr, nullptr, 0);
 	deviceContext->RSSetState(nullptr);
 
-	// 注意这里变为各向异性过滤器
+	// 使用各向异性过滤获取更好的绘制质量
 	deviceContext->PSSetSamplers(0, 1, RenderStates::SSAnistropicWrap.GetAddressOf());
 	deviceContext->OMSetDepthStencilState(nullptr, 0);
 	deviceContext->OMSetBlendState(nullptr, nullptr, 0xFFFFFFFF);

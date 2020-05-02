@@ -4,6 +4,40 @@
 中版本号 项目添加</br>
 小版本号 项目调整(随中版本号添加归零)
 
+2020/2/14 v1.27.1</br>
+-少量代码调整</br>
+
+2020/2/14 v1.27.0</br>
+-添加项目 Blur and Sobel</br>
+
+2020/2/7 v1.26.1</br>
+-项目 OIT防止窗口拉伸出现问题</br>
+-调整`TextureRender::Init`方法</br>
+-调整`CreateWICTexutre2DArrayFromFile`方法
+
+2020/2/6 v1.26.0</br>
+-添加项目 OIT</br>
+-调整`TextureRender::Begin`方法</br>
+-调整项目文件布局
+
+2020/2/1 v1.25.1</br>
+-修复Geometry中Terrain创建问题</br>
+-hlsl和hlsli编码也统一使用UTF-8 NO BOM
+
+2020/1/20 v1.25.0</br>
+-**添加项目 Waves**</br>
+-调整图形调试设置对象名的函数</br>
+-默认项目和Geometry索引类型调整为DWORD(即32位无符号整数)</br>
+-部分Geometry取消center参数</br>
+-调整SkyRender、TextureRedner，统一使用InitResource初始化</br>
+-更新MIT许可证年份
+
+2020/1/9 v1.24.20</br>
+-调整项目配置(项目05变为06)
+
+2019/9/26 v1.24.19</br>
+-由于VS2019 16.3.0开始仅有C++17起能使用filesystem，在此删除了filesystem相关
+
 2019/5/31 v1.24.18</br>
 -源文件编码尝试替换为UTF-8(NO BOM)
 
