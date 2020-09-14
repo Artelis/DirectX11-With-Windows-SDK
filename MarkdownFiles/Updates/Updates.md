@@ -4,6 +4,43 @@
 中版本号 项目添加</br>
 小版本号 项目调整(随中版本号添加归零)
 
+2020/7/19 v1.32.1</br>
+-EffectHelper相关函数调整</br>
+
+2020/7/19 v1.32.0</br>
+-**添加项目 Particle System**</br>
+-创建纹理数组的函数统一为`CreateTexture2DArrayFromFile`</br>
+-调整特效的SetEyePos函数</br>
+-为EffectHelper添加对流输出的支持
+
+2020/7/16 v1.31.2</br>
+-修正Transform的GetUpAxisXM和GetForwardAxisXM
+
+2020/7/15 v1.31.1</br>
+-调整Effects.h
+
+2020/7/14 v1.31.0</br>
+-**添加项目 Displacement Mapping**</br>
+-修改Geometry的Cylinder以支持该项目的曲面细分实例</br>
+-调整项目属性配置
+
+2020/7/11 v1.30.0</br>
+-**添加项目 Tessellation**
+
+2020/7/6 v1.29.1</br>
+-调整项目 SSAO
+
+2020/7/4 v1.29.0</br>
+-**添加项目 SSAO**</br>
+-修正Transform的RotateAround</br>
+-整合项目以减少重复资源</br>
+-EffectHelper添加对cbuffer默认值的支持</br>
+-修改项目31
+
+2020/6/25 v1.28.3</br>
+-修正Transform类，调整Transform和Camera的一些函数</br>
+-调整项目09-11关于`Basic_PS_3D`的HLSL代码
+
 2020/6/6 v1.28.2</br>
 -添加阴影映射的透明物体绘制支持</br>
 -修复项目问题
@@ -13,7 +50,7 @@
 -VS 2017安装器只有10.0.17763.0的最新SDK，故还是下降至该版本
 
 2020/6/3 v1.28.0</br>
--添加项目 Shadow Mapping</br>
+-**添加项目 Shadow Mapping**</br>
 -Windows SDK版本提升至10.0.19041.0</br>
 -摄像机移动速度提升100%
 
@@ -27,7 +64,7 @@
 -少量代码调整
 
 2020/2/14 v1.27.0</br>
--添加项目 Blur and Sobel
+-**添加项目 Blur and Sobel**
 
 2020/2/7 v1.26.1</br>
 -项目 OIT防止窗口拉伸出现问题</br>
@@ -35,7 +72,7 @@
 -调整`CreateWICTexutre2DArrayFromFile`方法
 
 2020/2/6 v1.26.0</br>
--添加项目 OIT</br>
+-**添加项目 OIT**</br>
 -调整`TextureRender::Begin`方法</br>
 -调整项目文件布局
 
